@@ -8,21 +8,18 @@
 // };
 
 Function.prototype.define = function(constructor) {
-	var func = function() {
-		var init = constructor['init'] || func['init'];
+	var klass = function() {
+		var init = constructor['init'] || klass['init'];
 		delete constructor['init'];
 
-		var obj = this;
-		obj.prototype = func.prototype;
 		if(typeof init === 'function') {
-			init.apply(obj, arguments);
+			init.apply(this, arguments);
 		}
 		for (var property in constructor) {
-			obj[property] = constructor[property];
+			this[property] = constructor[property];
 		};
-		return obj;
 	};
-	return func;
+	return klass;
 };
 
 var Class = function () {
