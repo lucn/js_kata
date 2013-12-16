@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<script type="text/javascript" src="http://image.bitautoimg.com/autoalbum/V2.1/js/angular.min.js"></script>
+		<script type="text/javascript">
+			var todoApp = angular.module('todoApp', []);
+			todoApp.directive('ngEnter', function () {
+			    return function (scope, element, attrs) {
+			        element.bind("keydown keypress", function (event) {
+			            if(event.which === 13) {
+			                scope.$apply(function (){
+			                    scope.$eval(attrs.ngEnter);
+			                    angular.element(element).val("");
+			                });
+
+			                event.preventDefault();
+			            }
+			        });
+			    };
+			});
+			todoApp.controller('ToDdListCtrl', function ($scope) {
+				$scope.items = [];
+				$scope.new_todo = function(input) {
+					$scope.items.push(input);
+				};        		
+			});
+		</script>
+	</head>
+	<body>
+		<div ng-app="todoApp" ng-controller="ToDdListCtrl">
+			<input type="text" ng-model="input" ng-enter="new_todo(input)"></input>
+			<input type="button" value="new" ng-click="new_todo(input)" />
+			<span class="hui">to do list count: {{ items.length }}</span>
+			<ul>
+				<li ng-class-odd="'change_bg'" ng-repeat="item in items">{{ item }}</li>
+			</ul>
+		</div>
+	</body>
+</html>
