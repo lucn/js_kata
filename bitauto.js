@@ -28,7 +28,7 @@ Function.prototype.define = function(constructor) {
 var Class = function () {
 	var constructor = {};
 	if(arguments && arguments.length > 0) {
-		constructo['init'] = arguments[0];
+		constructor['init'] = arguments[0];
 	}
 	return Class.define(constructor);
 };
